@@ -117,6 +117,19 @@ async def get_workout(
     return workout
 
 
+@app.get('/workout/{workout_id}/{set_id}')
+async def get_set(
+    workout_id: UUID,
+    set_id: UUID,
+    workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
+) -> Set:
+    workout = (await workout_repository.get_by_ids({workout_id}))[workout_id]
+    for set in workout.sets:
+        if set.id == set_id:
+            return set
+    raise Exception
+
+
 @app.patch('/workout/{workout_id}')
 async def add_set(
     set_: Set,
