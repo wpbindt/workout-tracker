@@ -5,25 +5,13 @@ from typing import Callable
 from uuid import UUID
 
 from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
 
 from models.exercise import Exercise
 from models.workout import Workout, Set
 from repositories.repository import create_linux_db_repository, Repository
 
 app = FastAPI()
-origins = [
-    "http://localhost:8000",
-    "*",
-]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 exercise_repository_factory: Callable[[], Repository[Exercise, UUID]] = create_linux_db_repository(
     db_path=Path('/srv/exercise.db'),
