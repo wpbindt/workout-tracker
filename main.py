@@ -4,13 +4,20 @@ from pathlib import Path
 from typing import Callable
 from uuid import UUID
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 from models.exercise import Exercise
 from models.workout import Workout, Set
 from repositories.repository import create_linux_db_repository, Repository
 
 app = FastAPI()
+
+app.mount('/static', StaticFiles(directory='static'), name='static')
+
+templates = Jinja2Templates(directory='templates')
 
 
 exercise_repository_factory: Callable[[], Repository[Exercise, UUID]] = create_linux_db_repository(
@@ -24,6 +31,33 @@ workout_repository_factory: Callable[[], Repository[Workout, UUID]] = create_lin
     entity_deserializer=lambda serialized: Workout(**json.loads(serialized)),
     entity_serializer=lambda entity: entity.json(),
 )
+
+
+@app.get('/', response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse(
+        'index.html',
+        {'request': request},
+    )
+
+
+@app.get('/workout', response_class=HTMLResponse)
+async def individual_workout(
+    request: Request,
+    id: UUID,
+    workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
+    exercise_repository: Repository[Exercise, UUID] = Depends(exercise_repository_factory),
+):
+    workout = (await workout_repository.get_by_ids({id}))[id]
+    exercises = {exercise.id: exercise async for exercise in exercise_repository.get_all()}
+    return templates.TemplateResponse(
+        'workout.html',
+        {
+            'request': request,
+            'available_exercises': exercises,
+            'workout': workout
+        }
+    )
 
 
 @app.post('/exercise')
@@ -64,7 +98,7 @@ async def create_workout(
     return {'id': workout.id}
 
 
-@app.get('/workout')
+@app.get('/workouts')
 async def list_workouts(
     workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
 ) -> list[Workout]:

@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <td>name</td>
+        <td>reps</td>
+        <td>intended</td>
+    </tr>
+{% for set in sets %}
+    <tr>
+        <td>{{ exercises[set.exercise_id].name }}</td>
+        <td>{{ set.actual_reps.amount }}</td>
+        <td>{{ set.intended_reps.amount }}</td>
+    </tr>
+{% endfor %}
+</table>

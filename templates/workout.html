@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workout on {{ workout.time.date() }}</title>
+    <script type="module" src="static/workout.js"></script>
+</head>
+<body>
+{% with sets=workout.sets, exercises=available_exercises %}
+    {%  include 'set-display.html' %}
+{% endwith %}
+{% include 'set-form.html' %}
+</body>
+</html>

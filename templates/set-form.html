@@ -1,0 +1,15 @@
+<form id="set-input-form">
+    <label for="exercise-selector">Exercise:</label>
+    <select name="selected-exercise" id="exercise-selector">
+        {% for exercise in available_exercises.values() %}
+            <option value="{{ exercise.id }}">{{ exercise.name.capitalize() }}</option>
+        {% endfor %}
+    </select>
+    <label for="actual-reps">Reps:</label>
+    <input type="text" id="actual-reps" name="actual-reps">
+    <label for="intended-reps">Intended reps:</label>
+    <input type="text" id="intended-reps" name="intended-reps">
+    <label for="difficulty">Difficulty:</label>
+    <input type="text" id="difficulty" name="difficulty">
+</form>
+<button id="add-set">Add Set</button>
