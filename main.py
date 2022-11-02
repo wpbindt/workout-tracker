@@ -13,7 +13,7 @@ from workout_tracker.repositories.repository import Repository
 
 app = FastAPI()
 
-app.include_router(api_router)
+app.include_router(api_router, prefix='/api')
 
 app.mount('/static', StaticFiles(directory='static'), name='static')
 

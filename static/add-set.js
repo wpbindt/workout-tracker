@@ -33,7 +33,7 @@ function formatSet(setData) {
 
 function postSetToAPI(set, workoutId) {
     return fetch(
-        "http://localhost:8000/workout/" + workoutId,
+        "http://localhost:8000/api/workout/" + workoutId,
         {
             method: "PATCH",
             body: JSON.stringify(set),

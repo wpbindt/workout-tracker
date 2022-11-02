@@ -1,6 +1,6 @@
 function startWorkout() {
     fetch(
-        "http://localhost:8000/workout",
+        "http://localhost:8000/api/workout",
         {method: "POST"}
     ).then(
         response => response.json()

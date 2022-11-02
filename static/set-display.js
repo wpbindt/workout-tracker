@@ -16,13 +16,13 @@ function getWorkoutIdFromURL() {
 function getSetFromAPI(setId) {
     const workoutId = getWorkoutIdFromURL()
     return fetch(
-        "http://localhost:8000/workout/" + workoutId + '/' + setId
+        "http://localhost:8000/api/workout/" + workoutId + '/' + setId
     ).then(response => response.json())
 }
 
 function getExerciseNameFromAPI(set) {
     return fetch(
-        "http://localhost:8000/exercise/" + set.exercise_id
+        "http://localhost:8000/api/exercise/" + set.exercise_id
     ).then(
         response => response.json()
     ).then(
