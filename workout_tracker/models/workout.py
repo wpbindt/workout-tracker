@@ -1,11 +1,10 @@
-from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
 
-from models.exercise import RepUnit, DifficultyUnit
+from workout_tracker.models.exercise import RepUnit, DifficultyUnit
 
 
 class Reps(BaseModel):

@@ -9,9 +9,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from models.exercise import Exercise
-from models.workout import Workout, Set
-from repositories.repository import create_linux_db_repository, Repository
+from workout_tracker.models.exercise import Exercise
+from workout_tracker.models.workout import Workout, Set
+from workout_tracker.repositories.repository import create_linux_db_repository, Repository
 
 app = FastAPI()
 
