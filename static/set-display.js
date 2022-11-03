@@ -1,10 +1,10 @@
 export function updateSetDisplay(setId) {
-    getSetFromAPI(setId).then(
-        set => getExerciseNameFromAPI(set)
+    getSetFromAPI(
+        setId
     ).then(
-        response => {
-            appendSetToDisplay(...response)
-        }
+        getExerciseNameFromAPI
+    ).then(
+        appendSetToDisplay
     )
 }
 
