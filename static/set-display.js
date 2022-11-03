@@ -34,15 +34,14 @@ function getExerciseNameFromAPI(set) {
 
 function appendSetToDisplay(set, exerciseName) {
     const setDisplayTable = document.getElementById("set-display");
-    const root = document.createElement('tr');
-    const name = document.createElement('td');
-    name.appendChild(document.createTextNode(exerciseName));
-    const intendedReps = document.createElement('td');
-    intendedReps.appendChild(document.createTextNode(set.intended_reps.amount));
-    const actualReps = document.createElement('td');
-    actualReps.appendChild(document.createTextNode(set.actual_reps.amount));
-    root.appendChild(name);
-    root.appendChild(actualReps);
-    root.appendChild(intendedReps);
-    setDisplayTable.appendChild(root);
+    const row = setDisplayTable.insertRow(-1);
+    const cellContents = [
+        exerciseName,
+        set.actual_reps.amount.toString(),
+        set.intended_reps.amount.toString(),
+    ]
+    for (const [cellNumber, cellContent] of cellContents.entries()) {
+        const cell = row.insertCell(cellNumber);
+        cell.innerHTML = cellContent;
+    }
 }
