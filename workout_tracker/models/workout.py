@@ -17,24 +17,12 @@ class Difficulty(BaseModel):
     unit: DifficultyUnit
 
 
-class WrongDifficultyUnit(Exception):
-    pass
-
-
-class WrongRepUnit(Exception):
-    pass
-
-
 class Set(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     exercise_id: UUID
     intended_reps: Reps
     actual_reps: Reps
     difficulty: Difficulty
-
-    def __post_init__(self) -> None:
-        if self.actual_reps.unit != self.intended_reps.unit:
-            raise WrongRepUnit
 
 
 class Workout(BaseModel):
