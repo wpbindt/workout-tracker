@@ -1,13 +1,15 @@
-export function initializeAddSet(setAddedCallback) {
+export function initializeAddSet(apiClient, setAddedCallback) {
     const addSetButton = document.getElementById('add-set');
-    addSetButton.addEventListener('click', addSet(setAddedCallback));
+    addSetButton.addEventListener('click', addSet(apiClient, setAddedCallback));
 }
 
-function addSet(setAddedCallback) {
-    return () => {
+function addSet(apiClient, setAddedCallback) {
+    return async () => {
         const set = getSetFromForm();
         const workoutId = getWorkoutIdFromURL();
-        postSetToAPI(set, workoutId).then(setAddedCallback);
+        const setId = await apiClient.addSet(set, workoutId);
+        console.log('and here')
+        setAddedCallback(setId);
     }
 }
 
@@ -29,21 +31,4 @@ function formatSet(setData) {
         intended_reps: {amount: parseFloat(setData['intended-reps']), unit: 'repetition'},
         actual_reps: {amount: parseFloat(setData['actual-reps']), unit: 'repetition'},
     }
-}
-
-function postSetToAPI(set, workoutId) {
-    return fetch(
-        "http://localhost:8000/api/workout/" + workoutId,
-        {
-            method: "PATCH",
-            body: JSON.stringify(set),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        }
-    ).then(
-        response => response.json()
-    ).then(
-        set => set.id
-    )
 }
