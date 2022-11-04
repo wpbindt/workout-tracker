@@ -8,7 +8,6 @@ function addSet(apiClient, setAddedCallback) {
         const set = getSetFromForm();
         const workoutId = getWorkoutIdFromURL();
         const setId = await apiClient.addSet(set, workoutId);
-        console.log('and here')
         setAddedCallback(setId);
     }
 }

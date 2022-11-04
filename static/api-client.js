@@ -17,18 +17,33 @@ export class ApiClient {
         return response.json();
     }
 
+    async startWorkout() {
+        const workout = await this.makeRequest(
+            '/workout',
+            'POST',
+        );
+        return workout.id;
+    }
+
     async addSet(set, workoutId) {
         const returnedSet = await this.makeRequest(
             '/workout/' + workoutId,
             'PATCH',
             set,
-        )
-        return returnedSet.id
+        );
+        return returnedSet.id;
     }
 
     async getSet(workoutId, setId) {
         const set = await this.makeRequest(
             "/workout/" + workoutId + '/' + setId
         );
+        const exercise = await this.makeRequest(
+            "/exercise/" + set.exercise_id
+        );
+        return {
+            set: set,
+            exercise: exercise,
+        };
     }
 }

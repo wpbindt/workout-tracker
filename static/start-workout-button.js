@@ -1,17 +1,12 @@
-function startWorkout() {
-    fetch(
-        "http://localhost:8000/api/workout",
-        {method: "POST"}
-    ).then(
-        response => response.json()
-    ).then(
-        response => {
-            window.location = "http://localhost:8000/workout?id=" + response.id;
-        }
-    )
+async function workoutCallback(apiClient) {
+    const workoutId = await apiClient.startWorkout();
+    window.location = "http://localhost:8000/workout?id=" + workoutId;
 }
 
-export function initializeStartWorkoutButton() {
+export function initializeStartWorkoutButton(apiClient) {
     const workoutButton = document.getElementById("start-workout-button");
-    workoutButton.addEventListener("click", startWorkout);
+    workoutButton.addEventListener(
+        "click",
+        async () => await workoutCallback(apiClient),
+    );
 }

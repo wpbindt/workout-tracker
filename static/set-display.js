@@ -1,35 +1,14 @@
-export function updateSetDisplay(setId) {
-    getSetFromAPI(
-        setId
-    ).then(
-        getExerciseNameFromAPI
-    ).then(
-        appendSetToDisplay
-    )
+export function updateSetDisplay(apiClient) {
+    return async (setId) => {
+        const workoutId = getWorkoutIdFromURL();
+        const setData = await apiClient.getSet(workoutId, setId);
+        appendSetToDisplay(setData.set, setData.exercise.name);
+    };
 }
 
 function getWorkoutIdFromURL() {
     const params = (new URL(document.location)).searchParams;
     return params.get("id");
-}
-
-function getSetFromAPI(setId) {
-    const workoutId = getWorkoutIdFromURL()
-    return fetch(
-        "http://localhost:8000/api/workout/" + workoutId + '/' + setId
-    ).then(response => response.json())
-}
-
-function getExerciseNameFromAPI(set) {
-    return fetch(
-        "http://localhost:8000/api/exercise/" + set.exercise_id
-    ).then(
-        response => response.json()
-    ).then(
-        exercise => {
-            return [set, exercise.name];
-        }
-    )
 }
 
 function appendSetToDisplay(set, exerciseName) {
