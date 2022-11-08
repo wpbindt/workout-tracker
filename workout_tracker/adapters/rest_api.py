@@ -3,7 +3,13 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from workout_tracker.repositories.factory import exercise_repository_factory, workout_repository_factory
+from workout_tracker.adapters.create_app import create_app
+from workout_tracker.adapters.repository_factory import exercise_repository_factory, workout_repository_factory
+from workout_tracker.app import App
+from workout_tracker.internal_api.add_set import AddSet
+from workout_tracker.internal_api.get_exercise import GetExercise
+from workout_tracker.internal_api.get_set import GetSet
+from workout_tracker.internal_api.start_workout import StartWorkout
 from workout_tracker.models.exercise import Exercise
 from workout_tracker.models.workout import Workout, Set
 from workout_tracker.repositories.repository import Repository
@@ -33,20 +39,18 @@ async def list_exercises(
 @api_router.get('/exercise/{exercise_id}', tags=['api'])
 async def get_exercise(
     exercise_id: UUID,
-    exercise_repository: Repository[Exercise, UUID] = Depends(exercise_repository_factory),
+    app: App = Depends(create_app),
 ) -> Exercise:
-    workout = (await exercise_repository.get_by_ids({exercise_id}))[exercise_id]
-    return workout
+    return await app.execute(GetExercise(exercise_id))
 
 
 @api_router.post('/workout', tags=['api'])
 async def create_workout(
     time: datetime | None = None,
-    workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
+    app: App = Depends(create_app),
 ) -> dict[str, UUID]:
-    workout = Workout() if time is None else Workout(time=time)
-    await workout_repository.add(workout)
-    return {'id': workout.id}
+    workout_id = await app.execute(StartWorkout(time=time))
+    return {'id': workout_id}
 
 
 @api_router.get('/workouts', tags=['api'])
@@ -72,22 +76,16 @@ async def get_workout(
 async def get_set(
     workout_id: UUID,
     set_id: UUID,
-    workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
+    app: App = Depends(create_app),
 ) -> Set:
-    workout = (await workout_repository.get_by_ids({workout_id}))[workout_id]
-    for set in workout.sets:
-        if set.id == set_id:
-            return set
-    raise Exception
+    return await app.execute(GetSet(workout_id=workout_id, set_id=set_id))
 
 
 @api_router.patch('/workout/{workout_id}', tags=['api'])
 async def add_set(
     set_: Set,
     workout_id: UUID,
-    workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
+    app: App = Depends(create_app),
 ) -> dict[str, UUID]:
-    workout = (await workout_repository.get_by_ids({workout_id}))[workout_id]
-    workout.sets.append(set_)
-    await workout_repository.add(workout)
-    return {'id': set_.id}
+    set_id = await app.execute(AddSet(set_=set_, workout_id=workout_id))
+    return {'id': set_id}

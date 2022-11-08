@@ -6,10 +6,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from workout_tracker.api import api_router
+from workout_tracker.adapters.rest_api import api_router
 from workout_tracker.models.exercise import Exercise
 from workout_tracker.models.workout import Workout
-from workout_tracker.repositories.factory import exercise_repository_factory, workout_repository_factory
+from workout_tracker.adapters.repository_factory import exercise_repository_factory, workout_repository_factory
 from workout_tracker.repositories.repository import Repository
 
 app = FastAPI()
