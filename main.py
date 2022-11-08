@@ -1,3 +1,4 @@
+import json
 from uuid import UUID
 
 from fastapi import FastAPI, Depends, Request
@@ -41,7 +42,10 @@ async def individual_workout(
         'workout.html',
         {
             'request': request,
-            'available_exercises': exercises,
-            'workout': workout
+            'available_exercises': {
+                str(exercise.id): json.loads((exercise.json()))
+                for exercise in exercises.values()
+            },
+            'workout': json.loads(workout.json()),
         }
     )

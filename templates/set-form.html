@@ -1,4 +1,4 @@
-<form id="set-input-form">
+<form id="set-input-form" data-exercises='{{ available_exercises | tojson }}'>
     <label for="exercise-selector">Exercise:</label>
     <select name="selected-exercise" id="exercise-selector">
         {% for exercise in available_exercises.values() %}
