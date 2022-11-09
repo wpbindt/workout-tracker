@@ -33,10 +33,10 @@ async def index(request: Request):
 async def individual_workout(
     request: Request,
     id: UUID,
-    app: App = Depends(create_app),
+    workout_app: App = Depends(create_app),
 ):
-    workout = await app.execute(GetWorkout(id))
-    exercises = await app.execute(ListExercises())
+    workout = await workout_app.execute(GetWorkout(id))
+    exercises = await workout_app.execute(ListExercises())
     return templates.TemplateResponse(
         'workout.html',
         {
