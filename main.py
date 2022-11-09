@@ -35,8 +35,8 @@ async def individual_workout(
     id: UUID,
     workout_app: App = Depends(create_app),
 ):
-    workout = await workout_app.execute(GetWorkout(id))
-    exercises = await workout_app.execute(ListExercises())
+    workout = await GetWorkout(id).execute(workout_app)
+    exercises = await ListExercises().execute(workout_app)
     return templates.TemplateResponse(
         'workout.html',
         {

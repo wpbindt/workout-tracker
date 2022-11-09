@@ -1,13 +1,19 @@
+from __future__ import annotations
+
+import typing
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic
 
+if typing.TYPE_CHECKING:
+    from workout_tracker.app import App
 from workout_tracker.repositories.repository import Repositories
 
 ResponseType = TypeVar('ResponseType')
 
 
 class Request(Generic[ResponseType]):
-    pass
+    async def execute(self, app: App) -> ResponseType:
+        return await app.execute(self)
 
 
 RequestType = TypeVar('RequestType')
