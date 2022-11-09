@@ -1,15 +1,9 @@
-from dataclasses import dataclass
 from uuid import UUID
 
+from workout_tracker.api.add_set import AddSet
+from workout_tracker.api.models.workout import Set
+from workout_tracker.api.request import RequestExecutor
 from workout_tracker.repositories.repository import Repositories
-from workout_tracker.internal_api.request import Request, RequestExecutor
-from workout_tracker.models.workout import Set
-
-
-@dataclass(frozen=True)
-class AddSet(Request[UUID]):
-    workout_id: UUID
-    set_: Set
 
 
 class AddSetExecutor(RequestExecutor[AddSet, Set]):

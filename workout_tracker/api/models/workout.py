@@ -4,7 +4,7 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
 
-from workout_tracker.models.exercise import RepUnit, DifficultyUnit
+from workout_tracker.api.models.exercise import RepUnit, DifficultyUnit
 
 
 class Reps(BaseModel):

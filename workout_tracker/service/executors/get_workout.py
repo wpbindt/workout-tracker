@@ -1,14 +1,7 @@
-from dataclasses import dataclass
-from uuid import UUID
-
+from workout_tracker.api.get_workout import GetWorkout
+from workout_tracker.api.models.workout import Workout
+from workout_tracker.api.request import RequestExecutor, ResponseType
 from workout_tracker.repositories.repository import Repositories
-from workout_tracker.internal_api.request import ResponseType, Request, RequestExecutor
-from workout_tracker.models.workout import Workout
-
-
-@dataclass
-class GetWorkout(Request[Workout]):
-    workout_id: UUID
 
 
 class GetWorkoutExecutor(RequestExecutor[GetWorkout, Workout]):

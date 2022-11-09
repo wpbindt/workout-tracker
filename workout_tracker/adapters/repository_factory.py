@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import Callable
 from uuid import UUID
 
-from workout_tracker.models.exercise import Exercise
-from workout_tracker.models.workout import Workout
+from workout_tracker.api.models.exercise import Exercise
+from workout_tracker.api.models.workout import Workout
 from workout_tracker.repositories.repository import Repository
 from workout_tracker.adapters.linux_db_repository import create_linux_db_repository
 

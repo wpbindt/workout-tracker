@@ -1,13 +1,19 @@
 from __future__ import annotations
 from typing import Type
 
-from workout_tracker.internal_api.add_set import AddSetExecutor, AddSet
-from workout_tracker.internal_api.get_exercise import GetExercise, GetExerciseExecutor
-from workout_tracker.internal_api.get_set import GetSet, GetSetExecutor
-from workout_tracker.internal_api.get_workout import GetWorkoutExecutor, GetWorkout
-from workout_tracker.internal_api.list_exercises import ListExercisesExecutor, ListExercises
-from workout_tracker.internal_api.request import ResponseType, Request, RequestExecutor
-from workout_tracker.internal_api.start_workout import StartWorkoutExecutor, StartWorkout
+from workout_tracker.api.add_set import AddSet
+from workout_tracker.service.executors.add_set import AddSetExecutor
+from workout_tracker.api.get_exercise import GetExercise
+from workout_tracker.service.executors.get_exercise import GetExerciseExecutor
+from workout_tracker.api.get_set import GetSet
+from workout_tracker.service.executors.get_set import GetSetExecutor
+from workout_tracker.api.get_workout import GetWorkout
+from workout_tracker.service.executors.get_workout import GetWorkoutExecutor
+from workout_tracker.api.list_exercises import ListExercises
+from workout_tracker.service.executors.list_exercises import ListExercisesExecutor
+from workout_tracker.api.request import ResponseType, Request, RequestExecutor
+from workout_tracker.api.start_workout import StartWorkout
+from workout_tracker.service.executors.start_workout import StartWorkoutExecutor
 from workout_tracker.repositories.repository import Repositories
 
 

@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Generic, TypeVar, AbstractSet, Mapping, Protocol, AsyncIterator
+from typing import Generic, TypeVar, Protocol, AsyncIterator
 from uuid import UUID
 
-from workout_tracker.models.exercise import Exercise
-from workout_tracker.models.workout import Workout
+from workout_tracker.api.models.exercise import Exercise
+from workout_tracker.api.models.workout import Workout
 
 EntityId = TypeVar('EntityId', covariant=True)
 

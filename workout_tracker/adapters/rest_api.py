@@ -4,15 +4,15 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 
 from workout_tracker.adapters.create_app import create_app
+from workout_tracker.api.models.exercise import Exercise
+from workout_tracker.api.models.workout import Workout, Set
 from workout_tracker.app import App
-from workout_tracker.internal_api.add_set import AddSet
-from workout_tracker.internal_api.get_exercise import GetExercise
-from workout_tracker.internal_api.get_set import GetSet
-from workout_tracker.internal_api.get_workout import GetWorkout
-from workout_tracker.internal_api.list_exercises import ListExercises
-from workout_tracker.internal_api.start_workout import StartWorkout
-from workout_tracker.models.exercise import Exercise
-from workout_tracker.models.workout import Workout, Set
+from workout_tracker.api.add_set import AddSet
+from workout_tracker.api.get_exercise import GetExercise
+from workout_tracker.api.get_set import GetSet
+from workout_tracker.api.get_workout import GetWorkout
+from workout_tracker.api.list_exercises import ListExercises
+from workout_tracker.api.start_workout import StartWorkout
 
 api_router = APIRouter()
 

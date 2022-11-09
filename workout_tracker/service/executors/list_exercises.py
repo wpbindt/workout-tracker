@@ -1,14 +1,9 @@
-from dataclasses import dataclass
 from uuid import UUID
 
-from workout_tracker.models.exercise import Exercise
+from workout_tracker.api.list_exercises import ListExercises
+from workout_tracker.api.models.exercise import Exercise
+from workout_tracker.api.request import RequestExecutor
 from workout_tracker.repositories.repository import Repositories
-from workout_tracker.internal_api.request import Request, RequestExecutor
-
-
-@dataclass
-class ListExercises(Request[dict[UUID, Exercise]]):
-    pass
 
 
 class ListExercisesExecutor(RequestExecutor[ListExercises, dict[UUID, Exercise]]):

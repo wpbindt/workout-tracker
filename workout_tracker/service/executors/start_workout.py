@@ -1,15 +1,10 @@
-from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
 
+from workout_tracker.api.models.workout import Set, Workout
+from workout_tracker.api.request import RequestExecutor
+from workout_tracker.api.start_workout import StartWorkout
 from workout_tracker.repositories.repository import Repositories
-from workout_tracker.internal_api.request import Request, RequestExecutor
-from workout_tracker.models.workout import Set, Workout
-
-
-@dataclass(frozen=True)
-class StartWorkout(Request[UUID]):
-    time: datetime | None
 
 
 class StartWorkoutExecutor(RequestExecutor[StartWorkout, Set]):
