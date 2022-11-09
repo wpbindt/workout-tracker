@@ -6,11 +6,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
+from workout_tracker.adapters.create_app import create_app
 from workout_tracker.adapters.rest_api import api_router
-from workout_tracker.models.exercise import Exercise
-from workout_tracker.models.workout import Workout
-from workout_tracker.adapters.repository_factory import exercise_repository_factory, workout_repository_factory
-from workout_tracker.repositories.repository import Repository
+from workout_tracker.app import App
+from workout_tracker.internal_api.get_workout import GetWorkout
+from workout_tracker.internal_api.list_exercises import ListExercises
 
 app = FastAPI()
 
@@ -33,11 +33,10 @@ async def index(request: Request):
 async def individual_workout(
     request: Request,
     id: UUID,
-    workout_repository: Repository[Workout, UUID] = Depends(workout_repository_factory),
-    exercise_repository: Repository[Exercise, UUID] = Depends(exercise_repository_factory),
+    app: App = Depends(create_app),
 ):
-    workout = (await workout_repository.get_by_ids({id}))[id]
-    exercises = {exercise.id: exercise async for exercise in exercise_repository.get_all()}
+    workout = await app.execute(GetWorkout(id))
+    exercises = await app.execute(ListExercises())
     return templates.TemplateResponse(
         'workout.html',
         {
