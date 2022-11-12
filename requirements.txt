@@ -1,4 +1,7 @@
 fastapi
 jinja2
 mypy
+pydantic
+pytest
+pytest-asyncio
 uvicorn
