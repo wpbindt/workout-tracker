@@ -28,7 +28,9 @@ async def test_that_repository_is_able_to_retrieve_saved_data(repository: Reposi
 
 
 @pytest.mark.asyncio
-async def test_that_repository_is_able_to_retrieve_multiple_saved_data(repository: Repository[TestObject, UUID]) -> None:
+async def test_that_repository_is_able_to_retrieve_multiple_saved_data(
+    repository: Repository[TestObject, UUID],
+) -> None:
     entity_id_1 = uuid4()
     entity_1 = TestObject(id=entity_id_1, value='hi', other_value=99)
     entity_id_2 = uuid4()

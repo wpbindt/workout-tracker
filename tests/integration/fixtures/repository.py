@@ -47,6 +47,12 @@ def linux_db_repository():
     db_path.unlink(missing_ok=True)
 
 
-@pytest.fixture(params=['linux_db_repository'])
+@pytest.fixture
+def fake_repository():
+    from tests.integration.fixtures.fake_repository import FakeRepository
+    return FakeRepository()
+
+
+@pytest.fixture(params=['linux_db_repository', 'fake_repository'])
 def repository(request) -> Repository[TestObject, UUID]:
     return request.getfixturevalue(request.param)
