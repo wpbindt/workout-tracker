@@ -18,9 +18,14 @@ class LinuxDBRepository(Repository[Entity, EntityId], Generic[Entity, EntityId])
 
     async def get_by_ids(self, ids: AbstractSet[EntityId]) -> Mapping[EntityId, Entity]:
         with gnudbm.open(self._db_path, 'r') as db:
-            return {
-                id_: self._deserialize(db[str(id_)].decode())
+            raw_data = {
+                id_: db.get(str(id_))
                 for id_ in ids
+            }
+            return {
+                id_: self._deserialize(raw_datum.decode())
+                for id_, raw_datum in raw_data.items()
+                if raw_datum is not None
             }
 
     async def add(self, entity: Entity) -> None:
