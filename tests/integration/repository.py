@@ -55,3 +55,19 @@ async def test_that_repository_can_loop_through_data(repository: Repository[Test
     retrieved_entities = [d async for d in repository.get_all()]
 
     assert Counter(retrieved_entities) == Counter(entities)
+
+
+@pytest.mark.asyncio
+async def test_that_repository_only_returns_that_which_is_asked_for(
+        repository: Repository[TestObject, UUID],
+) -> None:
+    entity_id_1 = uuid4()
+    entity_1 = TestObject(id=entity_id_1, value='hi', other_value=99)
+    entity_id_2 = uuid4()
+    entity_2 = TestObject(id=entity_id_2, value='mom', other_value=66)
+
+    await repository.add(entity_1)
+    await repository.add(entity_2)
+    retrieved_entities = await repository.get_by_ids({entity_id_1})
+
+    assert retrieved_entities == {entity_id_1: entity_1}

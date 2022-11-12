@@ -11,6 +11,7 @@ class FakeRepository(Repository[Entity, EntityId]):
         return {
             id_: entity
             for id_, entity in self._entities.items()
+            if id_ in ids
         }
 
     async def add(self, entity: Entity) -> None:
