@@ -8,7 +8,6 @@ from workout_tracker.repositories.repository import Repository
 
 
 @pytest.fixture(params=[
-    'linux_db_repository',
     'fake_repository',
     'mongo_repository',
 ])
