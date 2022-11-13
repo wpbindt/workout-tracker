@@ -17,6 +17,7 @@ def serialize(value: Any) -> Any:
         dict: serialize_dict_like,
         Enum: serialize_enum,
         Decimal: float,
+        list: serialize_list_like,
     }
     for type_, serializer in serializers.items():
         if isinstance(value, type_):
@@ -26,6 +27,10 @@ def serialize(value: Any) -> Any:
 
 def serialize_pydantic_model(value: BaseModel) -> dict[str, Any]:
     return serialize(value.dict())
+
+
+def serialize_list_like(value: list[Any]) -> list[Any]:
+    return [serialize(v) for v in value]
 
 
 def serialize_dict_like(value: dict[str, Any]) -> dict[str, Any]:

@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 from enum import Enum
 from uuid import UUID, uuid4
 
@@ -17,15 +18,17 @@ class NestedObject(BaseModel):
     float_value: float
     int_value: int
     enum_value: TestEnum
+    decimal_value: Decimal
 
 
 class TestObject(BaseModel):
     integer_value: int
     date_time_value: datetime.datetime
     string_value: str
+    decimal_value: Decimal
     enum_value: TestEnum
     uuid_value: UUID
-    nested_object: NestedObject
+    nested_objects: list[NestedObject]
 
 
 @pytest.fixture
@@ -35,12 +38,22 @@ def serialization_test_object() -> TestObject:
         date_time_value=datetime.datetime.now(),
         string_value='three',
         enum_value=TestEnum.B,
+        decimal_value=Decimal('9.50'),
         uuid_value=uuid4(),
-        nested_object=NestedObject(
-            float_value=3.50,
-            int_value=9,
-            enum_value=TestEnum.A,
-        )
+        nested_objects=[
+            NestedObject(
+                float_value=3.50,
+                int_value=9,
+                enum_value=TestEnum.A,
+                decimal_value=Decimal('10.50'),
+            ),
+            NestedObject(
+                float_value=4.50,
+                int_value=7,
+                enum_value=TestEnum.B,
+                decimal_value=Decimal('11.50'),
+            ),
+        ]
     )
 
 
