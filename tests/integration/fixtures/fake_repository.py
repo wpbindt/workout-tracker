@@ -1,5 +1,9 @@
 from typing import AsyncIterator
+from uuid import UUID
 
+import pytest_asyncio
+
+from tests.integration.fixtures.test_object import TestObject
 from workout_tracker.repositories.repository import Repository, Entity, EntityId
 
 
@@ -20,3 +24,8 @@ class FakeRepository(Repository[Entity, EntityId]):
     async def get_all(self) -> AsyncIterator[Entity]:
         for entity in self._entities.values():
             yield entity
+
+
+@pytest_asyncio.fixture
+async def fake_repository() -> FakeRepository[TestObject, UUID]:
+    return FakeRepository()

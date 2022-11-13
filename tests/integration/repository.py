@@ -5,7 +5,7 @@ from uuid import uuid4, UUID
 
 import pytest
 
-from tests.integration.fixtures.repository import TestObject
+from tests.integration.fixtures.test_object import TestObject
 from workout_tracker.repositories.repository import Repository
 
 
