@@ -59,7 +59,7 @@ async def test_that_repository_can_loop_through_data(repository: Repository[Test
 
 @pytest.mark.asyncio
 async def test_that_repository_only_returns_that_which_is_asked_for(
-        repository: Repository[TestObject, UUID],
+    repository: Repository[TestObject, UUID],
 ) -> None:
     entity_id_1 = uuid4()
     entity_1 = TestObject(id=entity_id_1, value='hi', other_value=99)
