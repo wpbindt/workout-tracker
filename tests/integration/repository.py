@@ -71,3 +71,16 @@ async def test_that_repository_only_returns_that_which_is_asked_for(
     retrieved_entities = await repository.get_by_ids({entity_id_1})
 
     assert retrieved_entities == {entity_id_1: entity_1}
+
+
+@pytest.mark.asyncio
+async def test_that_repository_is_able_to_update_data(repository: Repository[TestObject, UUID]) -> None:
+    entity_id = uuid4()
+    entity = TestObject(id=entity_id, value='hi', other_value=99)
+    await repository.add(entity)
+    mutated_entity = TestObject(id=entity_id, value='mom', other_value=99)
+    await repository.add(mutated_entity)
+
+    retrieved_entity = (await repository.get_by_ids({entity_id}))[entity_id]
+
+    assert mutated_entity == retrieved_entity

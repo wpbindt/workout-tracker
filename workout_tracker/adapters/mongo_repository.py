@@ -27,7 +27,14 @@ class MongoRepository(Repository[Entity, EntityId]):
         }
 
     async def add(self, entity: Entity) -> None:
-        await self._collection.insert_one({'_id': entity.id, 'value': self._serialize_entity(entity)})
+        await self._collection.replace_one(
+            filter={'_id': {'$eq': entity.id}},
+            replacement={
+                '_id': entity.id,
+                'value': self._serialize_entity(entity)
+            },
+            upsert=True,
+        )
 
     async def get_all(self) -> AsyncIterator[Entity]:
         async for document in self._collection.find():
