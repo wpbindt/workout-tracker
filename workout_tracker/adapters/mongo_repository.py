@@ -20,17 +20,15 @@ class MongoRepository(Repository[Entity, EntityId]):
         self._deserialize_entity = deserialize_entity
 
     async def get_by_ids(self, ids: set[EntityId]) -> dict[EntityId, Entity]:
-        output = {}
-        for id_ in ids:
-            raw = await self._collection.find_one(id_)
-            if raw is None:
-                continue
-            output[id_] = self._deserialize_entity(raw['value'])
-        return output
+        documents = await self._collection.find({'_id': {'$in': list(ids)}}).to_list(len(ids))
+        return {
+            document['_id']: self._deserialize_entity(document['value'])
+            for document in documents
+        }
 
     async def add(self, entity: Entity) -> None:
         await self._collection.insert_one({'_id': entity.id, 'value': self._serialize_entity(entity)})
 
     async def get_all(self) -> AsyncIterator[Entity]:
-        async for raw in self._collection.find():
-            yield self._deserialize_entity(raw['value'])
+        async for document in self._collection.find():
+            yield self._deserialize_entity(document['value'])
