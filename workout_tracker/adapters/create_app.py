@@ -1,12 +1,32 @@
-from workout_tracker.adapters.repository_factory import workout_repository_factory, exercise_repository_factory
+from motor.motor_asyncio import AsyncIOMotorClient
+
+from workout_tracker.adapters.repositories.mongo_repository import MongoRepository
+from workout_tracker.adapters.repositories.serializers import deserialize, serialize
+from workout_tracker.api.models.exercise import Exercise
+from workout_tracker.api.models.workout import Workout
 from workout_tracker.app import App
 from workout_tracker.repositories.repository import Repositories
 
 
 async def create_app():
+    mongo_client = AsyncIOMotorClient(
+        'mongodb://mongo:27017/?uuidRepresentation=standard',
+    )
     return App(
         repositories=Repositories(
-            workout=workout_repository_factory(),
-            exercise=exercise_repository_factory()
+            workout=MongoRepository(
+                mongo_client=mongo_client,
+                database='workout_tracker',
+                collection='workout',
+                deserialize_entity=lambda value: deserialize(value, target_type=Workout),
+                serialize_entity=serialize,
+            ),
+            exercise=MongoRepository(
+                mongo_client=mongo_client,
+                database='workout_tracker',
+                collection='exercise',
+                deserialize_entity=lambda value: deserialize(value, target_type=Exercise),
+                serialize_entity=serialize,
+            ),
         )
     )

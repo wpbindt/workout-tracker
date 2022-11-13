@@ -6,7 +6,7 @@ from uuid import UUID
 from workout_tracker.api.models.exercise import Exercise
 from workout_tracker.api.models.workout import Workout
 from workout_tracker.repositories.repository import Repository
-from workout_tracker.adapters.linux_db_repository import create_linux_db_repository
+from workout_tracker.adapters.repositories.linux_db_repository import create_linux_db_repository
 
 exercise_repository_factory: Callable[[], Repository[Exercise, UUID]] = create_linux_db_repository(
     db_path=Path('/srv/exercise.db'),
