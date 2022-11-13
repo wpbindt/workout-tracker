@@ -1,3 +1,5 @@
+import os
+
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from workout_tracker.adapters.repositories.mongo_repository import MongoRepository
@@ -10,7 +12,7 @@ from workout_tracker.repositories.repository import Repositories
 
 async def create_app():
     mongo_client = AsyncIOMotorClient(
-        'mongodb://mongo:27017/?uuidRepresentation=standard',
+        os.environ['MONGO_URI'],
     )
     return App(
         repositories=Repositories(

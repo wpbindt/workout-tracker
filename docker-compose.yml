@@ -6,7 +6,9 @@ services:
       dockerfile: workout-tracker.dockerfile
       context: .
     ports:
-      - "8000:8000"
+      - '8000:8000'
+    environment:
+      MONGO_URI: 'mongodb://mongo:27017/?uuidRepresentation=standard'
     volumes:
       - ./:/srv
     entrypoint: uvicorn main:app --reload --port 8000 --host 0.0.0.0
@@ -14,8 +16,13 @@ services:
   mongo:
     image: mongo
     ports:
-      - "27017:27017"
+      - '27017:27017'
+    volumes:
+      - 'mongo_data_storage:/data/db'
 
 networks:
   default:
     name: workout_tracker_network
+
+volumes:
+  mongo_data_storage:
