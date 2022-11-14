@@ -7,4 +7,4 @@ from workout_tracker.api.request import Request
 
 @dataclass(frozen=True)
 class StartWorkout(Request[UUID]):
-    time: datetime | None
+    time: datetime | None = None
