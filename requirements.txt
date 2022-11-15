@@ -1,4 +1,5 @@
 fastapi
+freezegun
 jinja2
 motor
 mypy
