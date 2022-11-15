@@ -3,7 +3,7 @@ from uuid import UUID
 
 import pytest
 
-from tests.integration.fixtures.test_object import TestObject
+from tests.integration.fixtures.test_object import FixtureObject
 from workout_tracker.repositories.repository import Repository
 
 
@@ -11,5 +11,5 @@ from workout_tracker.repositories.repository import Repository
     'fake_repository',
     'mongo_repository',
 ])
-def repository(request) -> Repository[TestObject, UUID]:
+def repository(request) -> Repository[FixtureObject, UUID]:
     return request.getfixturevalue(request.param)

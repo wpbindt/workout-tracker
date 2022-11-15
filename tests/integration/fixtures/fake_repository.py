@@ -3,7 +3,7 @@ from uuid import UUID
 
 import pytest_asyncio
 
-from tests.integration.fixtures.test_object import TestObject
+from tests.integration.fixtures.test_object import FixtureObject
 from workout_tracker.repositories.repository import Repository, Entity, EntityId
 
 
@@ -27,5 +27,5 @@ class FakeRepository(Repository[Entity, EntityId]):
 
 
 @pytest_asyncio.fixture
-async def fake_repository() -> FakeRepository[TestObject, UUID]:
+async def fake_repository() -> FakeRepository[FixtureObject, UUID]:
     return FakeRepository()

@@ -4,16 +4,16 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class TestEnum(Enum):
+class FixtureEnum(Enum):
     A = 0
     B = 1
 
 
-class TestObject(BaseModel):
+class FixtureObject(BaseModel):
     id: UUID
     value: str
     other_value: int
-    test_enum: TestEnum = TestEnum.A
+    test_enum: FixtureEnum = FixtureEnum.A
 
     class Config:
         frozen = True
