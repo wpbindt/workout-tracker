@@ -1,3 +1,5 @@
+import os
+
 import pytest_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -8,7 +10,7 @@ from workout_tracker.adapters.repositories.serializers import serialize, deseria
 
 @pytest_asyncio.fixture
 async def mongo_repository():
-    mongo_client = AsyncIOMotorClient('mongodb://mongo:27017/?uuidRepresentation=standard')
+    mongo_client = AsyncIOMotorClient(os.environ['MONGO_CONNECTION_URI'])
     yield MongoRepository(
         mongo_client,
         database='test_database',
