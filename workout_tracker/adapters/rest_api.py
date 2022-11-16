@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 
 from workout_tracker.adapters.create_app import create_app
+from workout_tracker.api.add_exercise import AddExercise
 from workout_tracker.api.models.exercise import Exercise
 from workout_tracker.api.models.workout import Workout, Set
 from workout_tracker.app import App
@@ -66,3 +67,12 @@ async def add_set(
 ) -> dict[str, UUID]:
     set_id = await AddSet(set_=set_, workout_id=workout_id).execute(app)
     return {'id': set_id}
+
+
+@api_router.post('/exercise', tags=['api'])
+async def add_exercise(
+    exercise: Exercise,
+    app: App = Depends(create_app),
+) -> dict[str, UUID]:
+    exercise_id = await AddExercise(exercise).execute(app)
+    return {'id': exercise_id}

@@ -6,4 +6,5 @@ mypy
 pydantic
 pytest
 pytest-asyncio
+requests
 uvicorn
