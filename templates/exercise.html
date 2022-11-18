@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Exercises</title>
+    <script type="module" src="static/exercise.js"></script>
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <h1>Exercises</h1>
-<table>
+<table id="exercise-table">
     <thead>
     <tr>
         <th>Name</th>
         <th>Difficulty</th>
         <th>Rep</th>
         <th>Description</th>
+        <th><button id="add-exercise">+</button></th>
     </tr>
     </thead>
     <tbody id="books">
     {% for exercise in exercises %}
         <tr>
-        <th>{{ exercise.name }}</th>
-        <th>{{ exercise.difficulty_unit.value }}</th>
-        <th>{{ exercise.rep_unit.value }}</th>
-        <th>{{ exercise.description }}</th>
+        <td>{{ exercise.name }}</td>
+        <td>{{ exercise.difficulty_unit.value }}</td>
+        <td>{{ exercise.rep_unit.value }}</td>
+        <td>{{ exercise.description }}</td>
         </tr>
     {% endfor %}
     </tbody>
