@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercises</title>
+</head>
+<body>
+<h1>Exercises</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Difficulty</th>
+        <th>Rep</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody id="books">
+    {% for exercise in exercises %}
+        <tr>
+        <th>{{ exercise.name }}</th>
+        <th>{{ exercise.difficulty_unit.value }}</th>
+        <th>{{ exercise.rep_unit.value }}</th>
+        <th>{{ exercise.description }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

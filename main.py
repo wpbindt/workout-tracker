@@ -48,3 +48,21 @@ async def individual_workout(
             'workout': json.loads(workout.json()),
         }
     )
+
+
+@app.get('/exercise', response_class=HTMLResponse)
+async def exercises(
+    request: Request,
+    app: App = Depends(create_app),
+) -> templates.TemplateResponse:
+    exercises_ = [
+        exercise.dict()
+        for exercise in (await app.execute(ListExercises())).values()
+    ]
+    return templates.TemplateResponse(
+        'exercise.html',
+        {
+            'request': request,
+            'exercises': exercises_
+        }
+    )
