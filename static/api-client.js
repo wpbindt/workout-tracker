@@ -46,4 +46,13 @@ export class ApiClient {
             exercise: exercise,
         };
     }
+
+    async addExercise(exercise) {
+        const returnedExercise = await this.makeRequest(
+            '/exercise',
+            'POST',
+            exercise
+        );
+        return returnedExercise.id;
+    }
 }
