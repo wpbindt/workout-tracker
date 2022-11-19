@@ -7,6 +7,15 @@ table {
     table-layout: fixed;
     width: 77%;
     border: 3px solid royalblue;
+    border-collapse: collapse;
+}
+
+th {
+    border-bottom: 3px solid royalblue;
+}
+
+tr {
+    border-bottom: 1px solid gray;
 }
 
 .left-aligned-th {
