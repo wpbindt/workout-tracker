@@ -12,12 +12,9 @@ table {
 
 th {
     border-bottom: 3px solid royalblue;
+    text-align: left;
 }
 
 tr {
     border-bottom: 1px solid gray;
-}
-
-.left-aligned-th {
-    text-align: left;
 }
