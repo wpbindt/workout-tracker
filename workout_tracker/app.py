@@ -3,6 +3,7 @@ from typing import Type
 
 from workout_tracker.api.add_exercise import AddExercise
 from workout_tracker.api.add_set import AddSet
+from workout_tracker.api.remove_exercise import RemoveExercise
 from workout_tracker.service.executors.add_exercise import AddExerciseExecutor
 from workout_tracker.service.executors.add_set import AddSetExecutor
 from workout_tracker.api.get_exercise import GetExercise
@@ -15,6 +16,7 @@ from workout_tracker.api.list_exercises import ListExercises
 from workout_tracker.service.executors.list_exercises import ListExercisesExecutor
 from workout_tracker.api.request import ResponseType, Request, RequestExecutor
 from workout_tracker.api.start_workout import StartWorkout
+from workout_tracker.service.executors.remove_exercise import RemoveExerciseExecutor
 from workout_tracker.service.executors.start_workout import StartWorkoutExecutor
 from workout_tracker.repositories.repository import Repositories
 
@@ -37,9 +39,14 @@ class App:
             GetWorkout: GetWorkoutExecutor(),
             ListExercises: ListExercisesExecutor(),
             AddExercise: AddExerciseExecutor(),
+            RemoveExercise: RemoveExerciseExecutor(),
         }
 
     async def execute(self, request: Request[ResponseType]) -> ResponseType:
+        """
+
+        :rtype: object
+        """
         try:
             executor = self._executors[type(request)]
         except KeyError as e:

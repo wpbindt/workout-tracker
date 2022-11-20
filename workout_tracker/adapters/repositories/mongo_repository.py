@@ -28,7 +28,7 @@ class MongoRepository(Repository[Entity, EntityId]):
 
     async def add(self, entity: Entity) -> None:
         await self._collection.replace_one(
-            filter={'_id': {'$eq': entity.id}},
+            filter={'_id': entity.id},
             replacement={
                 '_id': entity.id,
                 'value': self._serialize_entity(entity)
@@ -39,3 +39,6 @@ class MongoRepository(Repository[Entity, EntityId]):
     async def get_all(self) -> AsyncIterator[Entity]:
         async for document in self._collection.find():
             yield self._deserialize_entity(document['value'])
+
+    async def remove(self, entity_id: EntityId) -> None:
+        await self._collection.delete_one({'_id': entity_id})

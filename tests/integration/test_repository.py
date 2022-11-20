@@ -84,3 +84,15 @@ async def test_that_repository_is_able_to_update_data(repository: Repository[Fix
     retrieved_entity = (await repository.get_by_ids({entity_id}))[entity_id]
 
     assert mutated_entity == retrieved_entity
+
+
+@pytest.mark.asyncio
+async def test_that_repository_is_able_to_remove_data(repository: Repository[FixtureObject, UUID]) -> None:
+    entity_id = uuid4()
+    entity = FixtureObject(id=entity_id, value='hi', other_value=99)
+    await repository.add(entity)
+
+    await repository.remove(entity_id)
+
+    retrieved_entities = await repository.get_by_ids({entity_id})
+    assert retrieved_entities == {}

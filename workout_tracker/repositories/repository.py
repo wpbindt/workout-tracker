@@ -34,6 +34,10 @@ class Repository(ABC, Generic[Entity, EntityId]):
     def get_all(self) -> AsyncIterator[Entity]:
         ...
 
+    @abstractmethod
+    async def remove(self, entity_id: EntityId) -> None:
+        ...
+
 
 @dataclass
 class Repositories:

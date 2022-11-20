@@ -7,6 +7,7 @@ from workout_tracker.adapters.create_app import create_app
 from workout_tracker.api.add_exercise import AddExercise
 from workout_tracker.api.models.exercise import Exercise
 from workout_tracker.api.models.workout import Workout, Set
+from workout_tracker.api.remove_exercise import RemoveExercise
 from workout_tracker.app import App
 from workout_tracker.api.add_set import AddSet
 from workout_tracker.api.get_exercise import GetExercise
@@ -76,3 +77,11 @@ async def add_exercise(
 ) -> dict[str, UUID]:
     exercise_id = await AddExercise(exercise).execute(app)
     return {'id': exercise_id}
+
+
+@api_router.delete('/exercise/{exercise_id}', tags=['api'])
+async def add_exercise(
+    exercise_id: UUID,
+    app: App = Depends(create_app),
+) -> None:
+    await RemoveExercise(exercise_id).execute(app)

@@ -25,6 +25,9 @@ class FakeRepository(Repository[Entity, EntityId]):
         for entity in self._entities.values():
             yield entity
 
+    async def remove(self, entity_id: EntityId) -> None:
+        self._entities.pop(entity_id)
+
 
 @pytest_asyncio.fixture
 async def fake_repository() -> FakeRepository[FixtureObject, UUID]:
