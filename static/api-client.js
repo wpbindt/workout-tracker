@@ -55,4 +55,11 @@ export class ApiClient {
         );
         return returnedExercise.id;
     }
+
+    async removeExercise(exerciseId) {
+        await this.makeRequest(
+            '/exercise/' + exerciseId,
+            'DELETE',
+        );
+    }
 }
