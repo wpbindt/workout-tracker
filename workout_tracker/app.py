@@ -43,10 +43,6 @@ class App:
         }
 
     async def execute(self, request: Request[ResponseType]) -> ResponseType:
-        """
-
-        :rtype: object
-        """
         try:
             executor = self._executors[type(request)]
         except KeyError as e:
